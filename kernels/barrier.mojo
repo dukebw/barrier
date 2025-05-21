@@ -9,8 +9,18 @@ from gpu import barrier, global_idx, thread_idx, block_idx
 from gpu.memory import AddressSpace
 from runtime.asyncrt import DeviceContextPtr
 from tensor_internal import InputTensor, OutputTensor
-from tensor_internal.managed_tensor_slice import _MutableInputTensor as MutableInputTensor
+from tensor_internal.managed_tensor_slice import (
+    _MutableInputTensor as MutableInputTensor,
+)
 from utils.numerics import get_accum_type
+
+
+fn bar(x: Int) -> Int:
+    return UnsafePointer[Int].alloc(42)[x]
+
+
+fn foo(x: Int) -> Int:
+    return bar(x)
 
 
 fn simple_kernel() -> None:
@@ -24,11 +34,8 @@ struct SimpleKernel:
 
     @staticmethod
     fn execute[
-        target: StringLiteral,
-    ](
-        c: MutableInputTensor,
-        ctx: DeviceContextPtr
-    ) raises -> None:
+        target: StaticString,
+    ](c: MutableInputTensor, ctx: DeviceContextPtr) raises -> None:
         alias block_dim = 32
         M = c.dim_size(0)
         N = c.dim_size(1)
