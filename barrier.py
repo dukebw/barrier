@@ -39,6 +39,8 @@ def run_barrier_kernel() -> None:
     # Need CPU and Accelerator devices
     device = Accelerator()
     session = InferenceSession(devices=[device])
+    session._set_mojo_define("__DEBUG_LEVEL", "line-tables")
+    session._set_mojo_define("__OPTIMIZATION_LEVEL", 3)
 
     print("Loading graph...")
     # Load the graph, providing the path to the custom ops package
