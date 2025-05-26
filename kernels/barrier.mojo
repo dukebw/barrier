@@ -1,6 +1,7 @@
 from math import ceildiv, fma
 from memory import UnsafePointer
 from memory import stack_allocation
+from os import abort
 from pathlib import Path
 from sys import simdwidthof
 
@@ -16,6 +17,7 @@ from utils.numerics import get_accum_type
 
 
 fn bar(x: Int) -> Int:
+    abort()
     return UnsafePointer[Int].alloc(42)[x]
 
 

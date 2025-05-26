@@ -4,6 +4,7 @@ from pathlib import Path
 from gpu.host import DeviceContext
 from kernels.barrier import simple_kernel, foo, bar
 from memory import UnsafePointer
+from os import abort
 
 
 fn main() -> None:
